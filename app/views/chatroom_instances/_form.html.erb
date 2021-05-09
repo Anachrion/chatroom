@@ -1,0 +1,22 @@
+<%= form_with(model: chatroom_instance) do |form| %>
+  <% if chatroom_instance.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(chatroom_instance.errors.count, "error") %> prohibited this chatroom_instance from being saved:</h2>
+
+      <ul>
+        <% chatroom_instance.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
