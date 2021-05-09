@@ -1,0 +1,7 @@
+%p#notice= notice
+%p
+  %strong Name:
+  = @chatroom_instance.name
+= link_to 'Edit', edit_chatroom_instance_path(@chatroom_instance)
+|
+= link_to 'Back', chatroom_instances_path
