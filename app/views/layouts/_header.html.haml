@@ -1,0 +1,28 @@
+%nav.navbar.navbar-dark.bg-dark.navbar-expand-md.justify-content-md-center.justify-content-start
+  = link_to "Chat App", root_path, class:"navbar-brand d-inline"
+  .navbar-collapse.collapse.align-items-center.w-100
+    %ul.navbar-nav.mx-auto.text-md-center.text-left
+      %li.nav-item
+        = link_to chatroom_instances_path, class:"nav-link" do
+          Chatrooms
+          %i.fa.fa-comments
+
+      %li.nav-item
+        = link_to users_path, class:"nav-link" do
+          Users
+          %i.fas.fa-user-friends
+
+
+    %ul.nav.navbar-nav.flex-row.justify-content-md-center.justify-content-start.flex-nowrap
+      -unless current_user
+        %li.nav-item
+          = link_to login_path, class:"nav-link" do
+            %i.fas.fa-sign-in-alt
+            Login
+      -if current_user
+        %li.nav-item
+          = link_to current_user.username, user_path(current_user.id), class:"nav-link"
+        %li.nav-item
+          = link_to logout_path, method: :delete, class:"nav-link" do
+            %i.fas.fa-sign-out-alt
+            Logout

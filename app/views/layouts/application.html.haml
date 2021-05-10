@@ -1,12 +1,22 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Chatroom
-    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    %meta{charset: 'utf-8'}/
+    %title
+      Chatroom
     = csrf_meta_tags
     = csp_meta_tag
+
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
   %body
-    = yield
+    = render 'layouts/header'
+    .container
+      - if notice.present?
+        .alert.alert-success.my-2{:role => "alert"}
+          = notice
+      - if alert.present?
+        .alert.alert-danger.my-2{:role => "alert"}
+          = alert
+      = yield

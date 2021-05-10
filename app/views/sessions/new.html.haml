@@ -1,0 +1,12 @@
+.row.mt-5
+  .col-6.mx-auto
+    .d-flex.flex-column.align-items-center.text-center.card
+      %h3
+        Login
+      = form_for(@user, url: login_path) do |f|
+        .form-group
+          = f.text_field :username, class: "form-control", placeholder: "Login"
+        %button.btn.btn-secondary.my-2
+          Randomize
+        .actions
+          = f.submit "Login", class: "btn btn-primary btn-lg"
