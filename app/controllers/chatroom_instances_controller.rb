@@ -8,6 +8,7 @@ class ChatroomInstancesController < ApplicationController
 
   # GET /chatroom_instances/1 or /chatroom_instances/1.json
   def show
+    @message = Message.new
   end
 
   # GET /chatroom_instances/new

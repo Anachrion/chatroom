@@ -1,6 +1,42 @@
-%p
-  %strong Name:
-  = @chatroom_instance.name
-= link_to 'Edit', edit_chatroom_instance_path(@chatroom_instance)
-|
-= link_to 'Back', chatroom_instances_path
+= javascript_pack_tag 'chatroom'
+
+.chat
+  .container.py-5.px-4
+    %header.text-center
+      %h2.display-5
+        Chatroom #{@chatroom_instance.name}
+    .row.rounded-lg.overflow-hidden.shadow
+      .col-12.px-0
+        .px-4.py-5.chat-box.bg-white
+          - @chatroom_instance.messages.each do |message|
+            - if message.user.id != current_user.id
+              .media.w-50.mb-3
+                .media-body.ml-3
+                  .bg-light.rounded.py-2.px-3.mb-2
+                    %p.text-small.mb-0.text-muted
+                      = message.content
+                  %p.small.text-muted
+                    = message.created_at.strftime("%H:%M | %d %b %Y")
+            - else
+              .media.w-50.ml-auto.mb-3
+                .media-body
+                  .bg-primary.rounded.py-2.px-3.mb-2
+                    %p.text-small.mb-0.text-white
+                      = message.content
+                  %p.small.text-muted
+                    = message.created_at&.strftime("%H:%M | %d %b %Y")
+        = form_for @message, remote: true, authenticity_token: true do |form|
+          .input-group
+            = form.text_area :content, class: "content form-control rounded-0 border-0 py-4 bg-light"
+            .input-group-append
+              %button#send-button.btn.btn-success.btn-lg
+                %i.fa.fa-paper-plane
+          = form.hidden_field(:chatroom_instance_id, value: @chatroom_instance.id)
+        - if @chatroom_instance.errors.any?
+          #error_explanation
+            %h2
+              #{pluralize(@chatroom_instance.errors.count, "error")} prohibited this chat from being saved:
+            %ul
+              - @chatroom_instance.errors.full_messages.each do |message|
+                %li
+                  message

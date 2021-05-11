@@ -1,20 +1,6 @@
-= form_with(model: message) do |form|
-  - if message.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(message.errors.count, "error")
-        prohibited this message from being saved:
-      %ul
-        - message.errors.each do |error|
-          %li= error.full_message
-  .field
-    = form.label :content
-    = form.text_area :content
-  .field
-    = form.label :user_id
-    = form.text_field :user_id
-  .field
-    = form.label :chatroom_instance_id
-    = form.text_field :chatroom_instance_id
-  .actions
-    = form.submit
+= form_for message, remote: true, authenticity_token: true do |f|
+  = f.label :your_message
+  \:
+  = f.text_area :content, class: "form-control", data: {textarea: "message"}
+  = f.hidden_field :chatroom_id, value: chatroom_instance.id
+  = f.submit "send", class: "btn btn-primary", style: "display: none", data: {send: "message"}
