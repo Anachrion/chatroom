@@ -9,7 +9,7 @@ class ChatroomInstancesController < ApplicationController
   # GET /chatroom_instances/1 or /chatroom_instances/1.json
   def show
     gon.chatroom = @chatroom_instance.as_json(include: { messages: { methods: :formated_created_at, include: :user } })
-    gon.current_user = current_user
+    gon.users = User.all
     gon.form_url = messages_path
     @message = Message.new
   end

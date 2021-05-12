@@ -1,15 +1,22 @@
 %h1 Chatroom Instances
-%table
-  %thead
-    %tr
-      %th Name
-      %th{:colspan => "3"}
-  %tbody
-    - @chatroom_instances.each do |chatroom_instance|
-      %tr
-        %td= chatroom_instance.name
-        %td= link_to 'Show', chatroom_instance
-        %td= link_to 'Edit', edit_chatroom_instance_path(chatroom_instance)
-        %td= link_to 'Destroy', chatroom_instance, method: :delete, data: { confirm: 'Are you sure?' }
-%br/
-= link_to 'New Chatroom Instance', new_chatroom_instance_path
+
+.d-flex.row
+  .col-md-6
+    - @chatroom_instances.each.each_with_index do |chatroom_instance|
+      .row.p-2.bg-white.border.rounded
+        .col-2
+          %i.far.fa-comment.fa-5x
+        .col-7
+          .d-flex.flex-column.align-items-center
+            %h5
+              = link_to chatroom_instance, class:"text-dark" do
+                = chatroom_instance.name
+            .my-1
+              %span.badge.badge-info
+                #{chatroom_instance.messages.count} messages
+        .col-3.align-items-center.align-content-center.border-left
+          .d-flex.flex-column
+            = link_to 'Join', chatroom_instance, class:"btn btn-primary"
+            = link_to 'Destroy', chatroom_instance  , method: :delete, class:"btn btn-danger mt-2"
+
+= link_to 'New Chatroom Instance', new_chatroom_instance_path, class:"btn btn-success mt-5"

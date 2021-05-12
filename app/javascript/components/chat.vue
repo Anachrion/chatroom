@@ -7,7 +7,16 @@
         </h2>
       </header>
       <div class="row rounded-lg overflow-hidden shadow">
-        <div class="col-12 px-0">
+        <div class="col-2 px-0 border rounded-lg">
+          <template v-for="user in users">
+            <User
+              :user="user"
+              :key="user.id"
+            >
+          </User>
+          </template>
+        </div>
+        <div class="col-10 px-0">
           <div class="px-4 py-5 chat-box bg-white" ref="chatContainer">
             <template v-for="message in messages">
               <Message
@@ -34,6 +43,8 @@
 
 <script>
   import Message from "components/message";
+  import User from "components/user";
+
   import consumer from "channels/consumer"
 
   console.log(gon)
@@ -42,11 +53,13 @@
       return {
         chatroom: gon.chatroom,
         messages: gon.chatroom.messages,
+        users: gon.users,
         messageContent: ''
       }
     },
     components: {
-      Message
+      Message,
+      User
     },
     mounted() {
       consumer.subscriptions.create(
@@ -58,6 +71,14 @@
           received: data => {
             console.log(data);
             this.addNewMessage(data.message);
+          }
+        }
+      );
+      consumer.subscriptions.create('UserChannel',
+        {
+          received: data => {
+            console.log(data);
+            this.users.push(data.user);
           }
         }
       );
@@ -85,8 +106,9 @@
         fetch(gon.form_url, {
           method: "POST",
           headers: {
-            "X-CSRF-Token": csrfToken,
-            "Content-Type": "application/json"
+            'X-CSRF-Token': csrfToken,
+            'Content-Type': 'application/json',
+            'Content-type': 'application/json'
           },
           body: payload
         }).then(response => {

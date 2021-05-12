@@ -8,8 +8,10 @@ class SessionsController < ApplicationController
   def create
     user = User.find_or_initialize_by(username: user_params[:username])
     user.status = user_params[:status]
+    new_user = user.new_record?
     user.save!
     session[:user_id] = user.id
+    ActionCable.server.broadcast('user', user: user) if new_user      
     redirect_to chatroom_instances_path, notice: "You're now logged in as #{user.username}."
   end
 

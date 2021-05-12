@@ -20,9 +20,12 @@
             %i.fas.fa-sign-in-alt
             Login
       -if current_user
-        %li.nav-item
-          = link_to current_user.username, user_path(current_user.id), class:"nav-link"
+        %li.nav-item.d-inline-block.mr-3
+          = link_to current_user.username, user_path(current_user.id), class:"nav-link d-inline-block"
+          = select_tag :user_status, options_for_select(User.statuses.map {|k, v| [k.humanize.capitalize, k]}, current_user.status), {class: "form-select"}
         %li.nav-item
           = link_to logout_path, method: :delete, class:"nav-link" do
             %i.fas.fa-sign-out-alt
             Logout
+
+= javascript_pack_tag 'header'
