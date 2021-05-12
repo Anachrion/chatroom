@@ -49,12 +49,18 @@
       Message
     },
     mounted() {
-      consumer.subscriptions.create('MessagesChannel', {
-        received: data => {
-          console.log(data);
-          this.addNewMessage(data.message);
+      consumer.subscriptions.create(
+        {
+          channel: 'ChatroomChannel',
+          chatroom_instance_id: this.chatroom.id
+        },
+        {
+          received: data => {
+            console.log(data);
+            this.addNewMessage(data.message);
+          }
         }
-      });
+      );
       this.scrollToEnd();
     },
     updated() {
@@ -64,7 +70,6 @@
     },
     methods: {
       scrollToEnd() {
-        console.log('scrollToEnd');
         let container = this.$refs.chatContainer;
         container.scrollTop = container.scrollHeight
       },
