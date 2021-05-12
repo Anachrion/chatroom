@@ -3,10 +3,20 @@ body {
   color: #333;
   margin: 33px; }
 
-body, p, ol, ul, td {
+
+@mixin coherent-font {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
-  line-height: 18px; }
+  line-height: 18px;
+}
+
+.coherent-font {
+  @include coherent-font
+}
+
+body, p, ol, ul, td {
+  @include coherent-font
+}
 
 pre {
   background-color: #eee;

@@ -55,18 +55,13 @@
 //
 import TurbolinksAdapter from 'vue-turbolinks'
 import Vue from 'vue/dist/vue.esm'
-import App from '../app.vue'
+import ChatComponent from '../components/chat.vue'
 
-Vue.use(TurbolinksAdapter)
+Vue.use(TurbolinksAdapter);
 
-document.addEventListener('turbolinks:load', () => {
-  const app = new Vue({
-    el: '#hello',
-    data: () => {
-      return {
-        message: "Can you say hello?"
-      }
-    },
-    components: { App }
-  })
+// No need for document.addEventListener('turbolinks:load'
+// https://github.com/jeffreyguenther/vue-turbolinks/issues/12
+new Vue({
+  el: '#chat',
+  components: { ChatComponent }
 })
